@@ -1,5 +1,6 @@
 pub mod state;
 pub mod instructions;
+pub mod form_error;
 
 use anchor_lang::prelude::*;
 use instructions::*;
@@ -22,10 +23,17 @@ pub mod forms_contract {
 
     pub fn submit_response(
         ctx: Context<SubmitResponse>,
-        form: Pubkey,
         answers: Vec<u8>
     ) -> Result<()> {
-        instructions::submit_response::submit_response(ctx, form, answers)
+        instructions::submit_response::submit_response(ctx, answers)
+    }
+
+    pub fn close_form(ctx: Context<CloseForm>) -> Result<()> {
+        instructions::close_form::close_form(ctx)
+    }
+
+    pub fn delete_response(ctx: Context<DeleteResponse>) -> Result<()> {
+        instructions::delete_response::delete_response(ctx)
     }
 
 }

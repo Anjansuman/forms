@@ -8,6 +8,7 @@ pub struct FormMetaData {
     pub title: String,
     pub description: String,
     pub form_schema: Vec<FormField>,
+    pub is_open: bool,
     pub bump: u8
 }
 
@@ -34,6 +35,7 @@ impl FormMetaData {
         4 + 150 +
         4 + 300 +
         4 + (FormField::MAX_SIZE * 10) +
+        1 +
         1;
 }
 
