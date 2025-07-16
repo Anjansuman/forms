@@ -3,11 +3,13 @@ use anchor_lang::prelude::*;
 use crate::state::FormResponse;
 use crate::form_error::FormError;
 
-pub fn delete_response(ctx: Context<DeleteResponse>) -> Result<()> {
+pub fn delete_response(ctx: Context<DeleteResponse>, form_id: u64) -> Result<()> {
 
     let response = &ctx.accounts.response_account;
 
     require!(response.responder == ctx.accounts.responder.key(), FormError::Unauthorized);
+
+    let _ = form_id;
 
     Ok(())
 }

@@ -14,26 +14,28 @@ pub mod forms_contract {
 
     pub fn create_form(
         ctx: Context<CreateForm>,
+        form_id: u64,
         title: String,
         description: String,
         form_schema: Vec<FormField>
     ) -> Result<()> {
-        instructions::create_form::create_form(ctx, title, description, form_schema)
+        instructions::create_form::create_form(ctx, form_id, title, description, form_schema)
     }
 
     pub fn submit_response(
         ctx: Context<SubmitResponse>,
+        form_id: u64,
         answers: Vec<u8>
     ) -> Result<()> {
-        instructions::submit_response::submit_response(ctx, answers)
+        instructions::submit_response::submit_response(ctx, form_id, answers)
     }
 
-    pub fn close_form(ctx: Context<CloseForm>) -> Result<()> {
-        instructions::close_form::close_form(ctx)
+    pub fn close_form(ctx: Context<CloseForm>, form_id: u64) -> Result<()> {
+        instructions::close_form::close_form(ctx, form_id)
     }
 
-    pub fn delete_response(ctx: Context<DeleteResponse>) -> Result<()> {
-        instructions::delete_response::delete_response(ctx)
+    pub fn delete_response(ctx: Context<DeleteResponse>, form_id: u64) -> Result<()> {
+        instructions::delete_response::delete_response(ctx, form_id)
     }
 
 }

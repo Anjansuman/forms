@@ -4,11 +4,14 @@ use crate::state::{FormField, FormMetaData};
 
 pub fn create_form(
     ctx: Context<CreateForm>,
+    form_id: u64,
     title: String,
     description: String,
     form_schema: Vec<FormField>,
 ) -> Result<()> {
-    let form = &mut ctx.accounts.form_account;
+    let form = &mut ctx.accounts.form_metadata;
+
+    let _ = form_id;
 
     form.creator = ctx.accounts.creator.key();
     form.created_at = Clock::get()?.unix_timestamp;
@@ -30,7 +33,7 @@ pub struct CreateForm<'info> {
         payer = creator,
         space = 8 + FormMetaData::MAX_SIZE
     )]
-    pub form_account: Account<'info, FormMetaData>,
+    pub form_metadata: Account<'info, FormMetaData>,
 
     #[account(mut)]
     pub creator: Signer<'info>,

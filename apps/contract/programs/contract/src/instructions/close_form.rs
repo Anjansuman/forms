@@ -3,12 +3,14 @@ use anchor_lang::prelude::*;
 use crate::state::FormMetaData;
 use crate::form_error::FormError;
 
-pub fn close_form(ctx: Context<CloseForm>) -> Result<()> {
+pub fn close_form(ctx: Context<CloseForm>, form_id: u64) -> Result<()> {
 
     let form = &mut ctx.accounts.form_metadata;
 
     require!(form.is_open, FormError::FormClosed);
     require!(form.creator == ctx.accounts.creator.key(), FormError::Unauthorized);
+
+    let _ = form_id;
 
     form.is_open = false;
 

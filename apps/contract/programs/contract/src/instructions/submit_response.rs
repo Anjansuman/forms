@@ -3,12 +3,14 @@ use anchor_lang::prelude::*;
 use crate::form_error::FormError;
 use crate::state::{FormMetaData, FormResponse};
 
-pub fn submit_response(ctx: Context<SubmitResponse>, answers: Vec<u8>) -> Result<()> {
+pub fn submit_response(ctx: Context<SubmitResponse>, form_id: u64, answers: Vec<u8>) -> Result<()> {
     let form = &ctx.accounts.form_metadata;
 
     require!(form.is_open, FormError::FormClosed);
 
     let response = &mut ctx.accounts.response_account;
+
+    let _ = form_id;
 
     response.form = form.key();
     response.responder = ctx.accounts.responder.key();
